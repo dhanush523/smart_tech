@@ -317,3 +317,79 @@ width: 140px;
   color: #131111;
   border-color: #000;
 }
+
+/* MOBILE RESPONSIVE DESIGN */
+
+/* For tablets (max-width: 992px) */
+@media (max-width: 992px) {
+  #services {
+    padding: 40px 20px;
+  }
+
+  .service-card {
+    max-width: 280px;
+    height: 360px;
+  }
+
+  .service-card img {
+    height: 130px;
+  }
+}
+
+/* For mobile phones (max-width: 768px) */
+@media (max-width: 768px) {
+
+  #services h2 {
+    font-size: 32px;
+  }
+
+  .service-intro {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr; /* only 1 card per row */
+    gap: 15px;
+  }
+
+  .service-card {
+    max-width: 90%;
+    height: auto; /* auto height for mobile */
+    padding: 16px;
+  }
+
+  .service-card img {
+    height: 120px;
+  }
+
+  .service-card h3 {
+    font-size: 18px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+  }
+
+  .btns {
+    width: 130px;
+    font-size: 11px;
+    padding: 8px;
+  }
+}
+
+/* For small phones (max-width: 480px) */
+@media (max-width: 480px) {
+
+  #services {
+    padding: 30px 10px;
+  }
+
+  #services h2 {
+    font-size: 28px;
+  }
+
+  .service-card img {
+    height: 110px;
+  }
+}
