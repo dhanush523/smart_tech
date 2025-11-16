@@ -249,7 +249,7 @@ button:hover {
       transition: transform 0.3s, box-shadow 0.3s;
       width: 100%;
        max-width: 320px;   /* was 450px — smaller width */
-  height: 360px;      /* was 400px — smaller height */
+  height: 380px;      /* was 400px — smaller height */
     }
 
     /* .service-card:hover {
