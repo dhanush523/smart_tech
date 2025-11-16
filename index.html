@@ -182,7 +182,7 @@
 
       <div class="social-icons">
 
-        <a href="mailto:smarttechinfosolution@gmail.com">
+        <a href="mailto:smarttechinfosolution@gmail.com" onclick="openGmail()>
           <i class="far fa-envelope"></i>
         </a>
 
@@ -213,11 +213,12 @@
 
         <select id="service" required>
           <option value="">Select Service</option>
-          <option>Computer / Laptop Repair</option>
-          <option>Chip Level Service</option>
+          <option>Laptop Repair</option>
+          <option>Desktop Assembly & Service</option>
           <option>Software Installation</option>
-          <option>Hardware Upgrade</option>
-          <option>New Laptop / PC Purchase</option>
+          <option>Data Recovery</option>
+          <option>Virus & Malware Removal</option>
+          <option>Networking Setup</option>
           <option>Other</option>
         </select>
 
@@ -228,6 +229,60 @@
     </div>
   </div>
 </section>
+
+   <!-- -------------------------------------------------------------------------------------------- -->
+
+<footer class="footer">
+  <div class="footer-container">
+    
+    <!-- About -->
+    <div class="footer-about">
+      <h2>Smart Tech Info Solution</h2>
+      <p>Your trusted computer & laptop sales and service center in Chennai.  
+         We provide chip-level service, software support, accessories & more.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#products"><i class="fa-solid fa-laptop"></i> Products</a></li>
+        <li><a href="#services"><i class="fa-solid fa-wrench"></i> Services</a></li>
+        <li><a href="#about"><i class="fa-solid fa-circle-info"></i> About</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+
+      <p><i class="fa-solid fa-phone"></i> +91 93603 62776</p>
+
+      <p><i class="fa-solid fa-envelope"></i> smarttechinfosolution@gmail.com</p>
+
+      <p><i class="fa-solid fa-location-dot"></i> Avadi, Chennai, India</p>
+
+      <!-- Social Icons -->
+      <div class="footer-social">
+         <a href="#" onclick="openGmail()" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://wa.me/9360362776?text=Hello!%20I%20am%20interested%20in%20your%20service." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/vin_posters" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://t.me/YourTelegramUsername" target="_blank">
+  <i class="fa-brands fa-telegram"></i>
+</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 <span>Smart Tech Info Solution</span> | All Rights Reserved.</p>
+  </div>
+</footer>
+
+   <!-- -------------------------------------------------------------------------------------------- -->
 
 </body>
 </html>
@@ -261,4 +316,32 @@
     // clear form
     document.getElementById("contactForm").reset();
 });
+
+
+  //  <!-- -------------------------------------------------------------------------------------------- -->
+
+
+function openGmail() {
+    const email = "dhanushshankar74@gmail.com";
+   const subject = "Inquiry about Computer/Laptop Services";
+const body = "Hello Smart Tech Info Solution, I am interested in your computer/laptop services. Please provide more details.";
+
+
+    
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // 📱 Mobile → open Gmail app (mailto:)
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    } else {
+      // 💻 Desktop → open Gmail web
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`,
+        "_blank"
+      );
+    }
+  }   
+
+  //  <!-- -------------------------------------------------------------------------------------------- -->
+
 </script>
