@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <section class="hero">
@@ -26,7 +27,7 @@
           <li><a href="#categories">Product</a></li>
           <li><a href="#services">service</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="helpline.html">Contact</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
 <br>
@@ -157,6 +158,76 @@
 
 
    <!-- -------------------------------------------------------------------------------------------- -->
+<!-- CONTACT SECTION -->
+<section id="contact">
+  <h2 style="color:#0c0c0c; text-align:center; margin-bottom:40px; font-size:40px;">
+    Contact Us
+  </h2>
+
+  <div class="contact-wrapper">
+
+    <!-- LEFT SIDE -->
+    <div class="contact-info">
+      <h2>Get in Touch</h2>
+      <p>
+        Have a computer issue or need a laptop?  
+        Contact Smart Tech Info Solution — we’re here to help!
+      </p>
+
+      <div class="info">
+        <p><i class="fa-solid fa-envelope"></i> smarttechinfosolution@gmail.com</p>
+        <p><i class="fa-solid fa-phone"></i> +91 93603 62776</p>
+        <p><i class="fa-solid fa-location-dot"></i> Kodungaiyur, Chennai</p>
+      </div>
+
+      <div class="social-icons">
+
+        <a href="mailto:smarttechinfosolution@gmail.com">
+          <i class="far fa-envelope"></i>
+        </a>
+
+        <a href="https://wa.me/919360362776?text=Hello!%20I%20need%20computer/laptop%20service%20information." target="_blank">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+        <a href="https://www.instagram.com/" target="_blank">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <a href="https://www.google.com/maps?q=your+shop+location" target="_blank">
+  <i class="fa-solid fa-location-dot"></i>
+</a>
+
+
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE (FORM) -->
+    <div class="contact-form">
+      <h3>Send Us a Message</h3>
+
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="tel" id="phone" placeholder="Your Phone Number" required pattern="[0-9]{10}" />
+        <input type="email" id="email" placeholder="Your Email" required />
+
+        <select id="service" required>
+          <option value="">Select Service</option>
+          <option>Computer / Laptop Repair</option>
+          <option>Chip Level Service</option>
+          <option>Software Installation</option>
+          <option>Hardware Upgrade</option>
+          <option>New Laptop / PC Purchase</option>
+          <option>Other</option>
+        </select>
+
+        <textarea id="message" rows="4" placeholder="Your Message" required></textarea>
+
+        <button type="submit">Send on WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
