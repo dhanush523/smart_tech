@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page - Style 2</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #d9e4ff, #f4f7ff);
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .product-card {
+      width: 100%;
+      max-width: 750px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .product-image {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .product-info h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 600;
+      color: #0a53ff;
+      margin-bottom: 12px;
+    }
+
+    .details {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .btn-cart {
+      background: #0a53ff;
+      color: #fff;
+    }
+
+    .btn-cart:hover {
+      background: #003ebb;
+    }
+
+    .btn-buy {
+      background: #00c853;
+      color: #fff;
+    }
+
+    .btn-buy:hover {
+      background: #00903d;
+    }
+
+    @media (max-width: 768px) {
+      .product-info h2 {
+        font-size: 24px;
+      }
+      .price {
+        font-size: 22px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="product-card">
+
+    <div class="product-image">
+      <img src="main.png" alt="Product">
+    </div>
+
+    <div class="product-info">
+      <h2>Lenovo IdeaPad Slim 3</h2>
+      <p class="price">₹48,500</p>
+      <p class="details">
+        • Intel i3 12th Gen<br>
+        • 8GB RAM • 512GB SSD<br>
+        • 15.6” Full HD Display<br>
+        • Windows 11 • Webcam + Mic<br>
+        • 1 Year Warranty
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-cart">Add to Cart</button>
+      <button class="btn btn-buy">Buy Now</button>
+    </div>
+
+  </div>
+
+</body>
+</html>

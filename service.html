@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TechCare Computers - Products</title>
+
 <style>
   * {
     margin: 0; padding: 0; box-sizing: border-box;
@@ -54,16 +55,28 @@
   }
 
   .product:hover {transform: scale(1.03);}
+
   .product img {
     width: 100%; height: 180px; object-fit: cover;
     border-radius: 8px; margin-bottom: 10px;
   }
+
   .product h3 {color: #0d6efd; margin-bottom: 6px;}
+
+  .product .desc {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
   .product p {font-size: 14px; margin-bottom: 10px;}
+
   .product button {
     background: #0d6efd; color: white; border: none;
     padding: 8px 15px; border-radius: 6px; cursor: pointer;
   }
+
   .product button:hover {background: #084298;}
 
   .cart {
@@ -71,34 +84,117 @@
     border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
-  .cart h3 {margin-bottom: 10px;}
   .cart ul {list-style: none; margin-bottom: 15px;}
-  .cart ul li {padding: 6px 0; border-bottom: 1px solid #ddd;}
-  .cart button {
-    background: #198754; color: white; border: none;
-    padding: 10px 20px; border-radius: 8px; cursor: pointer;
-  }
-  .cart button:hover {background: #146c43;}
 
-  footer {
-    background: #0d6efd; color: white;
-    text-align: center; padding: 15px; margin-top: 40px;
+  .cart h3 {margin-bottom: 12px;}
+
+  .cart-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+
+  /* Quantity */
+  .qty-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  .qty-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: none;
+    background: #e9ecef;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .qty-btn:hover {
+    background: #ccc;
+  }
+
+  .qty-value {
+    font-weight: bold;
+    font-size: 16px;
+    width: 22px;
+    text-align: center;
+  }
+
+  .remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .remove-btn:hover {
+    background: #b02a37;
+  }
+
+  .checkout-btn {
+    background: #198754; 
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .checkout-btn:hover {background: #146c43;}
+
+  /* POPUP */
+  .popup-bg {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup {
+    background: white;
+    padding: 25px;
+    width: 90%; max-width: 400px;
+    border-radius: 10px;
+  }
+
+  .popup input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .popup button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #0d6efd;
+    color: white;
+    border-radius: 6px;
   }
 </style>
 </head>
 
 <body>
-<header>
-  <h1>💻 TechCare Computers</h1>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Products</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
+
+
 
 <div class="container">
+
   <h2>Our Computer Products</h2>
 
   <div class="categories">
@@ -114,7 +210,22 @@
   <div class="cart" id="cart">
     <h3>🛒 Your Cart</h3>
     <ul id="cartItems"></ul>
-    <button onclick="buyNow()">Buy on WhatsApp</button>
+    <p id="cartTotal" style="font-size: 18px; font-weight: bold; margin-top: 10px;">
+  Total: ₹0
+</p>
+
+    <button class="checkout-btn" onclick="openPopup()">Buy on WhatsApp</button>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-bg" id="popupBg">
+  <div class="popup">
+    <h3>Enter Your Details</h3>
+    <input type="text" id="custName" placeholder="Your Name">
+    <input type="number" id="custPhone" placeholder="Your Phone Number">
+    <button onclick="submitOrder()">Submit</button>
   </div>
 </div>
 
@@ -123,80 +234,152 @@
 </footer>
 
 <script>
-  const products = [
-    {id:1, name:"HP Laptop 15s", price:45000, category:"laptop", img:"https://via.placeholder.com/300x200?text=HP+Laptop"},
-    {id:2, name:"Dell Inspiron", price:52000, category:"laptop", img:"https://via.placeholder.com/300x200?text=Dell+Laptop"},
-    {id:3, name:"Logitech Mouse", price:800, category:"accessory", img:"https://via.placeholder.com/300x200?text=Mouse"},
-    {id:4, name:"Mechanical Keyboard", price:2500, category:"accessory", img:"https://via.placeholder.com/300x200?text=Keyboard"},
-    {id:5, name:"SSD 512GB", price:3500, category:"component", img:"https://via.placeholder.com/300x200?text=SSD"},
-    {id:6, name:"8GB DDR4 RAM", price:2400, category:"component", img:"https://via.placeholder.com/300x200?text=RAM"},
-    {id:7, name:"Wi-Fi Router", price:1800, category:"network", img:"https://via.placeholder.com/300x200?text=Router"},
-    {id:8, name:"LAN Cable 10m", price:300, category:"network", img:"https://via.placeholder.com/300x200?text=LAN+Cable"},
-  ];
+/* PRODUCTS */
+const products = [
+  { id:1, name:"HP Laptop 15s", price:45000, category:"laptop", img:"main.png" , desc:"intel i3 11th Gen • 8GB RAM • 512GB SSD" },
+  { id:2, name:"Dell Inspiron", price:52000, category:"laptop", img:"main.png", desc:"Intel i5 12th Gen • 8GB RAM • 512GB SSD" },
+  { id:3, name:"Logitech Mouse", price:800, category:"accessory", img:"main.png", desc:"Wireless mouse • 1600 DPI" },
+  { id:4, name:"Mechanical Keyboard", price:2500, category:"accessory", img:"main.png", desc:"RGB • Blue switches" },
+  { id:5, name:"SSD 512GB", price:3500, category:"component", img:"main.png", desc:"NVMe SSD • 2000MB/s" },
+  { id:6, name:"8GB DDR4 RAM", price:2400, category:"component", img:"main.png", desc:"3200MHz speed" },
+  { id:7, name:"Wi-Fi Router", price:1800, category:"network", img:"main.png", desc:"1200Mbps speed" },
+  { id:8, name:"LAN Cable 10m", price:300, category:"network", img:"main.png", desc:"Cat6 cable" }
+];
 
-  let filteredCategory = "all";
-  let cart = [];
+let filteredCategory = "all";
+let cart = [];
 
-  function displayProducts() {
-    const productList = document.getElementById("productList");
-    productList.innerHTML = "";
-    const filtered = filteredCategory === "all"
-      ? products
-      : products.filter(p => p.category === filteredCategory);
+/* DISPLAY PRODUCTS */
+function displayProducts() {
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
 
-    filtered.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "product";
-      div.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p>₹${p.price}</p>
-        <button onclick="addToCart(${p.id})">Add to Cart</button>
-      `;
-      productList.appendChild(div);
-    });
-  }
+  const filtered = filteredCategory === "all"
+    ? products
+    : products.filter(p => p.category === filteredCategory);
 
-  function filterCategory(cat, event) {
-    filteredCategory = cat;
-    document.querySelectorAll(".categories button").forEach(btn => btn.classList.remove("active"));
-    event.target.classList.add("active");
-    displayProducts();
-  }
+  filtered.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product";
+    div.innerHTML = `
+      <img src="${p.img}" alt="">
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc}</p>
+      <p><b>₹${p.price}</b></p>
+      <button onclick="addToCart(${p.id})">Add to Cart</button>
+    `;
+    list.appendChild(div);
+  });
+}
 
-  function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    if (!cart.includes(product)) {
-      cart.push(product);
-      updateCart();
-    } else {
-      alert("Item already in cart!");
-    }
-  }
-
-  function updateCart() {
-    const cartList = document.getElementById("cartItems");
-    cartList.innerHTML = "";
-    cart.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = `${item.name} - ₹${item.price}`;
-      cartList.appendChild(li);
-    });
-  }
-
-  function buyNow() {
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-   const phoneNumber = "919876543210"; // any valid WhatsApp number
-const message = "Hello! I’d like to know more about your products.";
-const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-window.open(url, "_blank");
-
-  }
-
+/* FILTER BUTTONS */
+function filterCategory(cat, event) {
+  filteredCategory = cat;
+  document.querySelectorAll(".categories button").forEach(btn => btn.classList.remove("active"));
+  event.target.classList.add("active");
   displayProducts();
+}
+
+/* ADD TO CART */
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+
+  updateCart();
+}
+
+/* UPDATE CART UI */
+function updateCart() {
+  const list = document.getElementById("cartItems");
+  list.innerHTML = "";
+
+  cart.forEach(item => {
+    const li = document.createElement("li");
+    li.className = "cart-item";
+    li.innerHTML = `
+      ${item.name} - ₹${item.price} 
+      
+      <div class="qty-box">
+        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+        <span class="qty-value">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+
+        <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+      </div>
+    `;
+    list.appendChild(li);
+  });
+
+  // SHOW TOTAL
+  let total = cart.reduce((sum, i) => sum + (i.qty * i.price), 0);
+  document.getElementById("cartTotal").innerText = "Total: ₹" + total;
+}
+
+
+/* QUANTITY CHANGE */
+function changeQty(id, change) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  item.qty += change;
+  if (item.qty <= 0) {
+    cart = cart.filter(x => x.id !== id);
+  }
+
+  updateCart();
+}
+
+/* REMOVE */
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCart();
+}
+
+/* POPUP */
+function openPopup() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  document.getElementById("popupBg").style.display = "flex";
+}
+
+/* SUBMIT ORDER */
+function submitOrder() {
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+
+  if (name === "" || phone.length < 10) {
+    alert("Enter valid name and phone number!");
+    return;
+  }
+
+  let msg = `Customer: ${name}%0APhone: ${phone}%0A%0AOrder Details:%0A`;
+
+  cart.forEach((item, i) => {
+    msg += `${i+1}. ${item.name} (x${item.qty}) - ₹${item.price * item.qty}%0A`;
+  });
+
+  const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+msg += `%0A------------------%0ATotal Amount: ₹${total}%0A------------------`;
+
+  const phoneNumber = "919360362776"; // YOUR NUMBER  
+  const url = `https://wa.me/${phoneNumber}?text=${msg}`;
+
+  window.open(url, "_blank");
+
+  document.getElementById("popupBg").style.display = "none";
+}
+
+displayProducts();
 </script>
+
 </body>
 </html>
