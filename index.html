@@ -94,7 +94,69 @@
     </div>
   </section>
 
+<!-- OVERLAY -->
+<div id="popup-overlay"></div>
 
+<!-- LOCATION SELECT POPUP -->
+<div id="location-popup" class="popup-box">
+  <h3>Select Service Type</h3>
+  <button onclick="openShopForm()" class="popup-btn">At Shop</button>
+  <button onclick="openHomeForm()" class="popup-btn">At Home</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
+
+<!-- AT SHOP FORM -->
+<div id="shop-form" class="popup-box">
+  <h3>Book Service (At Shop)</h3>
+  <input id="shop-name" class="input" placeholder="Name">
+  <input id="shop-phone" class="input" placeholder="Phone">
+  <input id="shop-date" type="date" class="input">
+<select id="shop-time" class="input">
+  <option value="">Optional Time</option>
+  <option>10:00 AM</option>
+  <option>11:00 AM</option>
+  <option>12:00 PM</option>
+  <option>01:00 PM</option>
+  <option>02:00 PM</option>
+  <option>03:00 PM</option>
+  <option>04:00 PM</option>
+  <option>05:00 PM</option>
+  <option>06:00 PM</option>
+  <option>07:00 PM</option>
+  <option>08:00 PM</option>
+  <option>09:00 PM</option>
+</select>
+
+  <button onclick="submitShop()" class="popup-btn">Submit</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
+
+<!-- AT HOME FORM -->
+<div id="home-form" class="popup-box">
+  <h3>Book Service (At Home)</h3>
+  <input id="home-name" class="input" placeholder="Name">
+  <input id="home-phone" class="input" placeholder="Phone">
+  <textarea id="home-address" class="input" placeholder="Full Address"></textarea>
+  <input id="home-date" type="date" class="input">
+<select id="home-time" class="input">
+  <option value="">Optional Time</option>
+  <option>10:00 AM</option>
+  <option>11:00 AM</option>
+  <option>12:00 PM</option>
+  <option>01:00 PM</option>
+  <option>02:00 PM</option>
+  <option>03:00 PM</option>
+  <option>04:00 PM</option>
+  <option>05:00 PM</option>
+  <option>06:00 PM</option>
+  <option>07:00 PM</option>
+  <option>08:00 PM</option>
+  <option>09:00 PM</option>
+</select>
+
+  <button onclick="submitHome()" class="popup-btn">Submit</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
    <!-- -------------------------------------------------------------------------------------------- -->
 
 

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Booking</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background: #eef3f9;
+    color: #333;
+  }
+
+  /* SERVICES SECTION */
+  #services {
+    padding: 60px 40px;
+    text-align: center;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  #services h2 {
+    color: #0c0c0c;
+    text-align: center;
+    margin-bottom: 4px;
+    font-size: 40px;
+  }
+
+  .service-intro {
+    max-width: 800px;
+    margin: 10px auto 40px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+
+  .service-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 320px;
+    height: 380px;
+  }
+
+  .service-card img {
+    width: 100%;
+    height: 140px;
+    border-radius: 10px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .service-card h3 {
+    color: #080808;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .service-card p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 2px;
+    line-height: 1.5;
+  }
+
+  .btns {
+    display: inline-block;
+    width: 140px;
+    background-color: #0e0c0c;
+    color: #ffffff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px;
+    transition: 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .btns:hover {
+    background-color: #ffffff;
+    color: #131111;
+    border-color: #000;
+  }
+
+  /* POPUP BASE STYLES */
+  #popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+  }
+
+  .popup-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    width: 300px;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 1000;
+  }
+
+  .popup-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: black;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .popup-btn:hover {
+    background: #333;
+  }
+
+  .popup-close {
+    width: 100%;
+    padding: 8px;
+    background: #ccc;
+    border: none;
+    margin-top: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+</style>
+</head>
+
+<body>
+
+<!-- SERVICES SECTION -->
+<section id="services">
+  <h2>Our Services</h2>
+  <p class="service-intro">We provide reliable computer repair, maintenance, and IT solutions.</p>
+
+  <div class="service-grid">
+
+    <div class="service-card">
+      <img src="service/laptop repair.jpg">
+      <h3>Laptop Repair</h3>
+      <p>Expert laptop repair and maintenance.</p>
+      <button class="btns" onclick="bookService('Laptop Repair')">Book Now</button>
+    </div>
+
+    <div class="service-card">
+      <img src="service/computer service.png">
+      <h3>Desktop Assembly & Service</h3>
+      <p>Custom PC building and upgrades.</p>
+      <button class="btns" onclick="bookService('Desktop Assembly & Service')">Book Now</button>
+    </div>
+
+    <div class="service-card">
+      <img src="service/software.jpg">
+      <h3>Software Installation</h3>
+      <p>OS, antivirus & application installation.</p>
+      <button class="btns" onclick="bookService('Software Installation')">Book Now</button>
+    </div>
+
+    <div class="service-card">
+      <img src="service/data recovery.jpg">
+      <h3>Data Recovery</h3>
+      <p>Recover deleted or lost data safely.</p>
+      <button class="btns" onclick="bookService('Data Recovery')">Book Now</button>
+    </div>
+
+    <div class="service-card">
+      <img src="service/virus removal.jpg">
+      <h3>Virus & Malware Removal</h3>
+      <p>Full virus cleaning and PC optimization.</p>
+      <button class="btns" onclick="bookService('Virus & Malware Removal')">Book Now</button>
+    </div>
+
+    <div class="service-card">
+      <img src="service/network setup.png">
+      <h3>Networking Setup</h3>
+      <p>Wi-Fi, LAN, CCTV & router configuration.</p>
+      <button class="btns" onclick="bookService('Networking Setup')">Book Now</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- OVERLAY -->
+<div id="popup-overlay"></div>
+
+<!-- LOCATION SELECT POPUP -->
+<div id="location-popup" class="popup-box">
+  <h3>Select Service Type</h3>
+  <button onclick="openShopForm()" class="popup-btn">At Shop</button>
+  <button onclick="openHomeForm()" class="popup-btn">At Home</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
+
+<!-- AT SHOP FORM -->
+<div id="shop-form" class="popup-box">
+  <h3>Book Service (At Shop)</h3>
+  <input id="shop-name" class="input" placeholder="Name">
+  <input id="shop-phone" class="input" placeholder="Phone">
+  <input id="shop-date" type="date" class="input">
+  <input id="shop-time" type="time" class="input">
+
+  <button onclick="submitShop()" class="popup-btn">Submit</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
+
+<!-- AT HOME FORM -->
+<div id="home-form" class="popup-box">
+  <h3>Book Service (At Home)</h3>
+  <input id="home-name" class="input" placeholder="Name">
+  <input id="home-phone" class="input" placeholder="Phone">
+  <textarea id="home-address" class="input" placeholder="Full Address"></textarea>
+  <input id="home-date" type="date" class="input">
+  <input id="home-time" type="time" class="input">
+
+  <button onclick="submitHome()" class="popup-btn">Submit</button>
+  <button onclick="closePopups()" class="popup-close">Cancel</button>
+</div>
+
+
+<script>
+let selectedService = "";
+
+function bookService(serviceName) {
+  selectedService = serviceName;
+  document.getElementById("popup-overlay").style.display = "block";
+  document.getElementById("location-popup").style.display = "block";
+}
+
+function openShopForm() {
+  document.getElementById("location-popup").style.display = "none";
+  document.getElementById("shop-form").style.display = "block";
+}
+
+function openHomeForm() {
+  document.getElementById("location-popup").style.display = "none";
+  document.getElementById("home-form").style.display = "block";
+}
+
+function closePopups() {
+  document.getElementById("popup-overlay").style.display = "none";
+  document.getElementById("location-popup").style.display = "none";
+  document.getElementById("shop-form").style.display = "none";
+  document.getElementById("home-form").style.display = "none";
+}
+
+function submitShop() {
+  const name = document.getElementById("shop-name").value;
+  const phone = document.getElementById("shop-phone").value;
+  const date = document.getElementById("shop-date").value;
+  const time = document.getElementById("shop-time").value;
+
+  if (!name || !phone || !date || !time) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  const message = `
+📌 *Service Booking (At Shop)*
+🔧 Service: ${selectedService}
+👤 Name: ${name}
+📞 Phone: ${phone}
+📅 Date: ${date}
+⏰ Time: ${time}`;
+
+  sendToWhatsApp(message);
+}
+
+function submitHome() {
+  const name = document.getElementById("home-name").value;
+  const phone = document.getElementById("home-phone").value;
+  const address = document.getElementById("home-address").value;
+  const date = document.getElementById("home-date").value;
+  const time = document.getElementById("home-time").value;
+
+  if (!name || !phone || !address || !date || !time) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  const message = `
+📌 *Service Booking (At Home)*
+🔧 Service: ${selectedService}
+👤 Name: ${name}
+📞 Phone: ${phone}
+🏠 Address: ${address}
+📅 Date: ${date}
+⏰ Time: ${time}`;
+
+  sendToWhatsApp(message);
+}
+
+function sendToWhatsApp(msg) {
+  const phone = "919360362776";
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+  closePopups();
+}
+</script>
+
+</body>
+</html>
