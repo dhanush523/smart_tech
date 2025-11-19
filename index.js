@@ -67,11 +67,14 @@ function isValidIndianPhone(phone) {
 
 /* -------------------- SUBMIT SHOP FORM -------------------- */
 
-function submitShop() {
+function submitShop() {  
   const name = document.getElementById("shop-name").value.trim();
   const phone = document.getElementById("shop-phone").value.trim();
   const date = document.getElementById("shop-date").value;
   const time = document.getElementById("shop-time").value;
+
+  // Your shop address (EDIT HERE)
+  const shopAddress = "Smart Tech Info Solution, Avadi, Chennai – 600054";
 
   // Required field validation
   if (!name || !phone || !date) {
@@ -91,13 +94,17 @@ function submitShop() {
     return;
   }
 
-  const message = `
-📌 *Service Booking (At Shop)*
-🔧 Service: ${selectedService}
-👤 Name: ${name}
-📞 Phone: ${phone}
-📅 Date: ${date}
-⏰ Time: ${time || "Not Selected"}
+  const message = `📌 *Service Booking (At Shop)*
+
+🔧 *Service:* ${selectedService}
+
+👤 *Name:* ${name}
+📞 *Phone:* ${phone}
+
+📅 *Date:* ${date}
+⏰ *Time:* ${time || "Not Selected"}
+
+📍 * Our Shop Location:* ${"https://maps.app.goo.gl/v2935ze3z8ncTNEd9"}
   `;
 
   sendToWhatsApp(message);

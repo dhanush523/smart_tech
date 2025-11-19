@@ -39,12 +39,14 @@
     background: #084298;
   }
 
+  /* GRID FIX - SAME SIZE BOXES */
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
   }
 
+  /* PRODUCT BOX FIXED SIZE */
   .product {
     background: white;
     border-radius: 10px;
@@ -52,25 +54,36 @@
     padding: 15px;
     text-align: center;
     transition: 0.3s;
+    height: 420px; /* SAME HEIGHT */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .product:hover {transform: scale(1.03);}
 
+  /* IMAGE SAME SIZE */
   .product img {
-    width: 100%; height: 180px; object-fit: cover;
-    border-radius: 8px; margin-bottom: 10px;
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+    border-radius: 8px;
   }
 
-  .product h3 {color: #0d6efd; margin-bottom: 6px;}
+  .product h3 {
+    color: #0d6efd;
+    margin: 8px 0;
+    min-height: 24px;
+  }
 
   .product .desc {
     font-size: 13px;
     color: #555;
-    margin-bottom: 10px;
-    line-height: 1.4;
+    line-height: 1.3;
+    min-height: 35px;
   }
 
-  .product p {font-size: 14px; margin-bottom: 10px;}
+  .product p {font-size: 14px;}
 
   .product button {
     background: #0d6efd; color: white; border: none;
@@ -79,21 +92,18 @@
 
   .product button:hover {background: #084298;}
 
+  /* CART */
   .cart {
     margin-top: 40px; background: white; padding: 20px;
     border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-
-  .cart ul {list-style: none; margin-bottom: 15px;}
-
-  .cart h3 {margin-bottom: 12px;}
 
   .cart-item {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
   }
 
-  /* Quantity */
+  /* Quantity buttons */
   .qty-box {
     display: inline-flex;
     align-items: center;
@@ -110,47 +120,21 @@
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
   }
 
-  .qty-btn:hover {
-    background: #ccc;
-  }
-
-  .qty-value {
-    font-weight: bold;
-    font-size: 16px;
-    width: 22px;
-    text-align: center;
-  }
+  .qty-btn:hover {background: #ccc;}
 
   .remove-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 12px;
+    background: #dc3545; color: white; border: none;
+    padding: 5px 10px; border-radius: 6px; font-size: 12px;
     cursor: pointer;
-    margin-left: 10px;
-  }
-
-  .remove-btn:hover {
-    background: #b02a37;
   }
 
   .checkout-btn {
-    background: #198754; 
-    color: white; 
-    border: none;
-    padding: 10px 20px; 
-    border-radius: 8px; 
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
+    background: #198754; color: white; border: none;
+    width: 100%; padding: 12px;
+    border-radius: 8px; margin-top: 10px; cursor: pointer;
   }
-
-  .checkout-btn:hover {background: #146c43;}
 
   /* POPUP */
   .popup-bg {
@@ -158,40 +142,23 @@
     top:0; left:0;
     width:100%; height:100%;
     background: rgba(0,0,0,0.6);
-    display: none;
-    justify-content: center;
-    align-items: center;
+    display: none; justify-content: center; align-items: center;
   }
 
   .popup {
-    background: white;
-    padding: 25px;
-    width: 90%; max-width: 400px;
-    border-radius: 10px;
+    background: white; padding: 25px; width: 90%;
+    max-width: 400px; border-radius: 10px;
   }
 
   .popup input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border-radius: 6px;
+    width: 100%; padding: 10px;
+    margin-bottom: 12px; border-radius: 6px;
     border: 1px solid #ccc;
-  }
-
-  .popup button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    border-radius: 6px;
   }
 </style>
 </head>
 
 <body>
-
-
 
 <div class="container">
 
@@ -210,9 +177,10 @@
   <div class="cart" id="cart">
     <h3>🛒 Your Cart</h3>
     <ul id="cartItems"></ul>
+
     <p id="cartTotal" style="font-size: 18px; font-weight: bold; margin-top: 10px;">
-  Total: ₹0
-</p>
+      Total: ₹0
+    </p>
 
     <button class="checkout-btn" onclick="openPopup()">Buy on WhatsApp</button>
   </div>
@@ -230,7 +198,7 @@
 </div>
 
 <footer>
-  <p>© 2025 TechCare Computers | All Rights Reserved</p>
+  <p style="text-align:center; padding:20px;">© 2025 TechCare Computers | All Rights Reserved</p>
 </footer>
 
 <script>
@@ -238,12 +206,15 @@
 const products = [
   { id:1, name:"HP Laptop 15s", price:45000, category:"laptop", img:"main.png" , desc:"intel i3 11th Gen • 8GB RAM • 512GB SSD" },
   { id:2, name:"Dell Inspiron", price:52000, category:"laptop", img:"main.png", desc:"Intel i5 12th Gen • 8GB RAM • 512GB SSD" },
-  { id:3, name:"Logitech Mouse", price:800, category:"accessory", img:"main.png", desc:"Wireless mouse • 1600 DPI" },
-  { id:4, name:"Mechanical Keyboard", price:2500, category:"accessory", img:"main.png", desc:"RGB • Blue switches" },
-  { id:5, name:"SSD 512GB", price:3500, category:"component", img:"main.png", desc:"NVMe SSD • 2000MB/s" },
-  { id:6, name:"8GB DDR4 RAM", price:2400, category:"component", img:"main.png", desc:"3200MHz speed" },
-  { id:7, name:"Wi-Fi Router", price:1800, category:"network", img:"main.png", desc:"1200Mbps speed" },
-  { id:8, name:"LAN Cable 10m", price:300, category:"network", img:"main.png", desc:"Cat6 cable" }
+  { id:3, name:"Keyboard And Mouse", price:800, category:"accessory", img:"accessories/keyboard and mouse.jpg", desc:"Wireless mouse • 1600 DPI" },
+  { id:4, name:"Web Camera", price:2500, category:"accessory", img:"accessories/web camera.jpg", desc:"Full HD Camera" },
+  { id:5, name:"Speaker", price:2500, category:"accessory", img:"accessories/speaker.jpg", desc:"Clear Bass Sound" },
+  { id:6, name:"Laptop Stand", price:2500, category:"accessory", img:"accessories/laptop stand.jpg", desc:"Ergonomic design" },
+
+  { id:7, name:"SSD 512GB", price:3500, category:"component", img:"main.png", desc:"NVMe SSD • 2000MB/s" },
+  { id:8, name:"8GB DDR4 RAM", price:2400, category:"component", img:"main.png", desc:"3200MHz speed" },
+  { id:9, name:"Wi-Fi Router", price:1800, category:"network", img:"main.png", desc:"1200Mbps speed" },
+  { id:10, name:"LAN Cable 10m", price:300, category:"network", img:"main.png", desc:"Cat6 cable" }
 ];
 
 let filteredCategory = "all";
@@ -275,7 +246,8 @@ function displayProducts() {
 /* FILTER BUTTONS */
 function filterCategory(cat, event) {
   filteredCategory = cat;
-  document.querySelectorAll(".categories button").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".categories button")
+    .forEach(btn => btn.classList.remove("active"));
   event.target.classList.add("active");
   displayProducts();
 }
@@ -283,8 +255,8 @@ function filterCategory(cat, event) {
 /* ADD TO CART */
 function addToCart(id) {
   const product = products.find(p => p.id === id);
-
   const existing = cart.find(item => item.id === id);
+
   if (existing) {
     existing.qty++;
   } else {
@@ -303,31 +275,29 @@ function updateCart() {
     const li = document.createElement("li");
     li.className = "cart-item";
     li.innerHTML = `
-      ${item.name} - ₹${item.price} 
+      ${item.name} - ₹${item.price}
       
       <div class="qty-box">
         <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
-        <span class="qty-value">${item.qty}</span>
+        <span>${item.qty}</span>
         <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-
         <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
       </div>
     `;
     list.appendChild(li);
   });
 
-  // SHOW TOTAL
   let total = cart.reduce((sum, i) => sum + (i.qty * i.price), 0);
   document.getElementById("cartTotal").innerText = "Total: ₹" + total;
 }
 
-
 /* QUANTITY CHANGE */
 function changeQty(id, change) {
   const item = cart.find(i => i.id === id);
-  if (!item) return;
 
+  if (!item) return;
   item.qty += change;
+
   if (item.qty <= 0) {
     cart = cart.filter(x => x.id !== id);
   }
@@ -368,13 +338,12 @@ function submitOrder() {
   });
 
   const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-msg += `%0A------------------%0ATotal Amount: ₹${total}%0A------------------`;
+  msg += `%0A------------------%0ATotal Amount: ₹${total}%0A------------------`;
 
-  const phoneNumber = "919360362776"; // YOUR NUMBER  
+  const phoneNumber = "919360362776";
   const url = `https://wa.me/${phoneNumber}?text=${msg}`;
 
   window.open(url, "_blank");
-
   document.getElementById("popupBg").style.display = "none";
 }
 
