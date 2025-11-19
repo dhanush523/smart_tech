@@ -4,351 +4,202 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TechCare Computers - Products</title>
-
 <style>
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-  }
-  body {background: #f5f7fa; color: #333;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+  body{background:#f5f7fa;color:#333;}
 
-  header {
-    background: #0d6efd; color: white;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 15px 30px;
-  }
+  .container{max-width:1200px;margin:40px auto;padding:0 20px;}
+  h2{text-align:center;margin-bottom:20px;}
 
-  nav a {
-    color: white; text-decoration: none;
-    margin: 0 10px; font-weight: 500;
-  }
+  .categories{text-align:center;margin-bottom:25px;}
+  .categories button{background:#0d6efd;color:white;border:none;padding:10px 20px;border-radius:8px;margin:5px;cursor:pointer;transition:0.3s;}
+  .categories button.active,.categories button:hover{background:#084298;}
 
-  .container {
-    max-width: 1200px; margin: 40px auto; padding: 0 20px;
-  }
+  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+  .product{background:white;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:15px;text-align:center;transition:0.3s;height:420px;display:flex;flex-direction:column;justify-content:space-between;}
+  .product img{width:100%;height:240px;object-fit:contain;border-radius:8px;}
+  .product h3{color:#0d6efd;margin:8px 0;}
+  .desc{font-size:13px;color:#555;min-height:30px;}
+  .price{font-weight:bold;}
+  .product button{background:#0d6efd;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;}
+  .product:hover{transform:scale(1.03);}
 
-  h2 {text-align: center; margin-bottom: 10px;}
+  /* Floating Cart Icon */
+  #floatingCart{position:fixed;right:20px;bottom:25px;width:60px;height:60px;background:#0d6efd;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:999;transition:0.3s;}
+  #floatingCart:hover{transform:scale(1.1);background:#084298;}
+  #cartCountBadge{position:absolute;top:-5px;right:-5px;background:#dc3545;color:white;width:22px;height:22px;font-size:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 
-  .categories {text-align: center; margin-bottom: 25px;}
-  .categories button {
-    background: #0d6efd; color: white; border: none;
-    padding: 10px 20px; border-radius: 8px;
-    margin: 5px; cursor: pointer; transition: 0.3s;
-  }
-  .categories button.active, .categories button:hover {
-    background: #084298;
-  }
+  /* Cart Panel */
+  #cartPanel{position:fixed;top:0;right:-320px;width:300px;height:100%;background:white;box-shadow:-8px 0 30px rgba(0,0,0,0.15);z-index:1000;transition:right 0.3s;padding:15px;display:flex;flex-direction:column;}
+  #cartPanel.open{right:0;}
+  #cartPanel header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+  #cartPanel header h3{color:#0d6efd;}
+  #closeCartBtn{background:#eee;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;}
 
-  /* GRID FIX - SAME SIZE BOXES */
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
+  #cartList{flex:1;overflow:auto;}
+  .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #ddd;}
+  .cart-item .info{flex:1;}
+  .cart-item h4{font-size:14px;color:#111;margin-bottom:4px;}
+  .cart-item p{font-size:13px;color:#555;margin-bottom:4px;}
+  .qty-controls{display:flex;align-items:center;gap:5px;margin-top:5px;}
+  .qty-btn{width:28px;height:28px;border:none;background:#eee;border-radius:6px;cursor:pointer;}
+  .remove-btn{background:#dc3545;color:white;border:none;padding:4px 6px;border-radius:5px;font-size:12px;cursor:pointer;}
 
-  /* PRODUCT BOX FIXED SIZE */
-  .product {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 15px;
-    text-align: center;
-    transition: 0.3s;
-    height: 420px; /* SAME HEIGHT */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+  #cartFooter{border-top:1px solid #ddd;padding-top:10px;margin-top:10px;}
+  #cartFooter p{font-weight:bold;margin-bottom:10px;}
+  .checkout-btn{background:#198754;color:white;border:none;padding:10px;width:100%;border-radius:6px;cursor:pointer;}
 
-  .product:hover {transform: scale(1.03);}
-
-  /* IMAGE SAME SIZE */
-  .product img {
-    width: 100%;
-    height: 240px;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-
-  .product h3 {
-    color: #0d6efd;
-    margin: 8px 0;
-    min-height: 24px;
-  }
-
-  .product .desc {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.3;
-    min-height: 35px;
-  }
-
-  .product p {font-size: 14px;}
-
-  .product button {
-    background: #0d6efd; color: white; border: none;
-    padding: 8px 15px; border-radius: 6px; cursor: pointer;
-  }
-
-  .product button:hover {background: #084298;}
-
-  /* CART */
-  .cart {
-    margin-top: 40px; background: white; padding: 20px;
-    border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  .cart-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
-
-  /* Quantity buttons */
-  .qty-box {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 5px;
-  }
-
-  .qty-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    border: none;
-    background: #e9ecef;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .qty-btn:hover {background: #ccc;}
-
-  .remove-btn {
-    background: #dc3545; color: white; border: none;
-    padding: 5px 10px; border-radius: 6px; font-size: 12px;
-    cursor: pointer;
-  }
-
-  .checkout-btn {
-    background: #198754; color: white; border: none;
-    width: 100%; padding: 12px;
-    border-radius: 8px; margin-top: 10px; cursor: pointer;
-  }
-
-  /* POPUP */
-  .popup-bg {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.6);
-    display: none; justify-content: center; align-items: center;
-  }
-
-  .popup {
-    background: white; padding: 25px; width: 90%;
-    max-width: 400px; border-radius: 10px;
-  }
-
-  .popup input {
-    width: 100%; padding: 10px;
-    margin-bottom: 12px; border-radius: 6px;
-    border: 1px solid #ccc;
-  }
+  /* Checkout Popup */
+  .popup-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:1100;}
+  .popup{background:white;padding:20px;width:90%;max-width:400px;border-radius:10px;}
+  .popup input{width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;}
+  .popup button{padding:8px 12px;border:none;border-radius:6px;background:#0d6efd;color:white;cursor:pointer;}
 </style>
 </head>
-
 <body>
 
 <div class="container">
-
   <h2>Our Computer Products</h2>
 
   <div class="categories">
-    <button class="active" onclick="filterCategory('all', event)">All</button>
-    <button onclick="filterCategory('laptop', event)">Laptops</button>
-    <button onclick="filterCategory('accessory', event)">Accessories</button>
-    <button onclick="filterCategory('component', event)">Components</button>
-    <button onclick="filterCategory('network', event)">Networking</button>
+    <button class="active" onclick="filterCategory('all',event)">All</button>
+    <button onclick="filterCategory('laptop',event)">Laptops</button>
+    <button onclick="filterCategory('accessory',event)">Accessories</button>
+    <button onclick="filterCategory('component',event)">Components</button>
+    <button onclick="filterCategory('network',event)">Networking</button>
   </div>
 
   <div class="products" id="productList"></div>
-
-  <div class="cart" id="cart">
-    <h3>🛒 Your Cart</h3>
-    <ul id="cartItems"></ul>
-
-    <p id="cartTotal" style="font-size: 18px; font-weight: bold; margin-top: 10px;">
-      Total: ₹0
-    </p>
-
-    <button class="checkout-btn" onclick="openPopup()">Buy on WhatsApp</button>
-  </div>
-
 </div>
 
-<!-- POPUP -->
-<div class="popup-bg" id="popupBg">
+<!-- Floating Cart Icon -->
+<div id="floatingCart" onclick="toggleCartPanel()">🛒<div id="cartCountBadge">0</div></div>
+
+<!-- Cart Panel -->
+<aside id="cartPanel">
+  <header>
+    <h3>Your Cart</h3>
+    <button id="closeCartBtn" onclick="closeCartPanel()">✕</button>
+  </header>
+  <div id="cartList"></div>
+  <div id="cartFooter">
+    <p id="cartTotal">Total: ₹0</p>
+    <button class="checkout-btn" onclick="openCheckout()">Checkout via WhatsApp</button>
+  </div>
+</aside>
+
+<!-- Checkout Popup -->
+<div class="popup-bg" id="checkoutPopup">
   <div class="popup">
     <h3>Enter Your Details</h3>
     <input type="text" id="custName" placeholder="Your Name">
-    <input type="number" id="custPhone" placeholder="Your Phone Number">
-    <button onclick="submitOrder()">Submit</button>
+    <input type="number" id="custPhone" placeholder="10-digit Phone">
+    <button onclick="submitOrder()">Submit Order</button>
   </div>
 </div>
 
-<footer>
-  <p style="text-align:center; padding:20px;">© 2025 TechCare Computers | All Rights Reserved</p>
-</footer>
-
 <script>
-/* PRODUCTS */
-const products = [
-  { id:1, name:"HP Laptop 15s", price:45000, category:"laptop", img:"main.png" , desc:"intel i3 11th Gen • 8GB RAM • 512GB SSD" },
-  { id:2, name:"Dell Inspiron", price:52000, category:"laptop", img:"main.png", desc:"Intel i5 12th Gen • 8GB RAM • 512GB SSD" },
-  { id:3, name:"Keyboard And Mouse", price:800, category:"accessory", img:"accessories/keyboard and mouse.jpg", desc:"Wireless mouse • 1600 DPI" },
-  { id:4, name:"Web Camera", price:2500, category:"accessory", img:"accessories/web camera.jpg", desc:"Full HD Camera" },
-  { id:5, name:"Speaker", price:2500, category:"accessory", img:"accessories/speaker.jpg", desc:"Clear Bass Sound" },
-  { id:6, name:"Laptop Stand", price:2500, category:"accessory", img:"accessories/laptop stand.jpg", desc:"Ergonomic design" },
-
-  { id:7, name:"SSD 512GB", price:3500, category:"component", img:"main.png", desc:"NVMe SSD • 2000MB/s" },
-  { id:8, name:"8GB DDR4 RAM", price:2400, category:"component", img:"main.png", desc:"3200MHz speed" },
-  { id:9, name:"Wi-Fi Router", price:1800, category:"network", img:"main.png", desc:"1200Mbps speed" },
-  { id:10, name:"LAN Cable 10m", price:300, category:"network", img:"main.png", desc:"Cat6 cable" }
+const products=[
+{id:1,name:"HP Laptop 15s",price:45000,category:"laptop",img:"main.png",desc:"Intel i3 11th Gen • 8GB RAM • 512GB SSD"},
+{id:2,name:"Dell Inspiron",price:52000,category:"laptop",img:"main.png",desc:"Intel i5 12th Gen • 8GB RAM • 512GB SSD"},
+{id:3,name:"Lenovo V15",price:48000,category:"laptop",img:"main.png",desc:"Intel i3 12th Gen • 8GB RAM • 512GB SSD"},
+{id:4,name:"Acer Aspire 7",price:60000,category:"laptop",img:"main.png",desc:"Ryzen 5 • GTX 1650 • 8GB RAM • 512GB SSD"},
+{id:5,name:"Keyboard & Mouse Combo",price:800,category:"accessory",img:"accessories/keyboard and mouse.jpg",desc:"Wireless keyboard & mouse combo"},
+{id:6,name:"Web Camera",price:2500,category:"accessory",img:"accessories/web camera.jpg",desc:"Full HD webcam"},
+{id:7,name:"Speaker",price:2500,category:"accessory",img:"accessories/speaker.jpg",desc:"Deep bass sound"},
+{id:8,name:"Laptop Stand",price:2500,category:"accessory",img:"accessories/laptop stand.jpg",desc:"Ergonomic aluminum stand"},
+{id:9,name:"RAM Memory",price:3500,category:"component",img:"components/ram memory.jpg",desc:"8GB DDR4 RAM"},
+{id:10,name:"Motherboard",price:6500,category:"component",img:"components/motherboard.jpg",desc:"Intel/AMD motherboard"},
+{id:11,name:"Hard Disk",price:2500,category:"component",img:"components/hard disk.jpg",desc:"1TB HDD"},
+{id:12,name:"Cooling Fan",price:450,category:"component",img:"components/system fan.jpg",desc:"120mm cooling fan"},
+{id:13,name:"Wi-Fi Router",price:1800,category:"network",img:"network/router.jpg",desc:"1200Mbps Dual Band"},
+{id:14,name:"LAN Cable 10m",price:300,category:"network",img:"network/lan cable.jpg",desc:"Cat6 LAN Cable"},
+{id:15,name:"USB WiFi Adapter",price:550,category:"network",img:"network/wifi adapter.jpg",desc:"300Mbps WiFi adapter"},
+{id:16,name:"Network Switch",price:1300,category:"network",img:"network/switch.jpg",desc:"8-port switch"}
 ];
 
-let filteredCategory = "all";
-let cart = [];
+let filteredCategory='all';
+let cart=[];
 
-/* DISPLAY PRODUCTS */
-function displayProducts() {
-  const list = document.getElementById("productList");
-  list.innerHTML = "";
-
-  const filtered = filteredCategory === "all"
-    ? products
-    : products.filter(p => p.category === filteredCategory);
-
-  filtered.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <img src="${p.img}" alt="">
+function displayProducts(){
+  const list=document.getElementById('productList'); list.innerHTML='';
+  const filtered=filteredCategory==='all'?products:products.filter(p=>p.category===filteredCategory);
+  filtered.forEach(p=>{
+    const div=document.createElement('div'); div.className='product';
+    div.innerHTML=`<img src="${p.img}" alt="">
       <h3>${p.name}</h3>
       <p class="desc">${p.desc}</p>
-      <p><b>₹${p.price}</b></p>
-      <button onclick="addToCart(${p.id})">Add to Cart</button>
-    `;
+      <p class="price">₹${p.price}</p>
+      <button onclick="addToCart(${p.id})">Add to Cart</button>`;
     list.appendChild(div);
   });
 }
 
-/* FILTER BUTTONS */
-function filterCategory(cat, event) {
-  filteredCategory = cat;
-  document.querySelectorAll(".categories button")
-    .forEach(btn => btn.classList.remove("active"));
-  event.target.classList.add("active");
+function filterCategory(cat,event){
+  filteredCategory=cat;
+  document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
   displayProducts();
 }
 
-/* ADD TO CART */
-function addToCart(id) {
-  const product = products.find(p => p.id === id);
-  const existing = cart.find(item => item.id === id);
+function addToCart(id){
+  const item=cart.find(i=>i.id===id);
+  if(item) item.qty++;
+  else { const p=products.find(p=>p.id===id); cart.push({id:p.id,name:p.name,price:p.price,qty:1}); }
+  updateCart();
+  openCartPanel();
+}
 
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ ...product, qty: 1 });
-  }
-
+function changeQty(id,delta){
+  const item=cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qty+=delta;
+  if(item.qty<=0) cart=cart.filter(i=>i.id!==id);
   updateCart();
 }
 
-/* UPDATE CART UI */
-function updateCart() {
-  const list = document.getElementById("cartItems");
-  list.innerHTML = "";
+function removeItem(id){ cart=cart.filter(i=>i.id!==id); updateCart(); }
 
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.className = "cart-item";
-    li.innerHTML = `
-      ${item.name} - ₹${item.price}
-      
-      <div class="qty-box">
-        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+function updateCart(){
+  document.getElementById('cartCountBadge').innerText=cart.reduce((s,i)=>s+i.qty,0);
+  const list=document.getElementById('cartList'); list.innerHTML='';
+  if(cart.length===0){ list.innerHTML='<p style="text-align:center;color:#666;">Cart is empty</p>'; document.getElementById('cartTotal').innerText='Total: ₹0'; return;}
+  cart.forEach(item=>{
+    const div=document.createElement('div'); div.className='cart-item';
+    div.innerHTML=`<div class="info">
+      <h4>${item.name}</h4>
+      <p>₹${item.price}</p>
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="changeQty(${item.id},-1)">-</button>
         <span>${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-        <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
       </div>
-    `;
-    list.appendChild(li);
+      </div>
+      <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>`;
+    list.appendChild(div);
   });
-
-  let total = cart.reduce((sum, i) => sum + (i.qty * i.price), 0);
-  document.getElementById("cartTotal").innerText = "Total: ₹" + total;
+  document.getElementById('cartTotal').innerText='Total: ₹'+cart.reduce((s,i)=>s+i.qty*i.price,0);
 }
 
-/* QUANTITY CHANGE */
-function changeQty(id, change) {
-  const item = cart.find(i => i.id === id);
+function toggleCartPanel(){ document.getElementById('cartPanel').classList.toggle('open'); }
+function openCartPanel(){ document.getElementById('cartPanel').classList.add('open'); updateCart(); }
+function closeCartPanel(){ document.getElementById('cartPanel').classList.remove('open'); }
 
-  if (!item) return;
-  item.qty += change;
-
-  if (item.qty <= 0) {
-    cart = cart.filter(x => x.id !== id);
-  }
-
-  updateCart();
+function openCheckout(){ if(cart.length===0){alert('Cart is empty'); return;} document.getElementById('checkoutPopup').style.display='flex'; }
+function submitOrder(){
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  if(name==='' || phone.length!==10){ alert('Enter valid name and 10-digit phone'); return; }
+  let msg=`Customer: ${name}%0APhone: ${phone}%0A%0AOrder:%0A`;
+  cart.forEach((i,idx)=> msg+=`${idx+1}. ${i.name} x${i.qty} - ₹${i.price*i.qty}%0A`);
+  msg+=`%0ATotal: ₹${cart.reduce((s,i)=>s+i.qty*i.price,0)}`;
+  window.open(`https://wa.me/919360362776?text=${msg}`,'_blank');
+  cart=[]; updateCart(); closeCheckout(); closeCartPanel();
 }
-
-/* REMOVE */
-function removeItem(id) {
-  cart = cart.filter(i => i.id !== id);
-  updateCart();
-}
-
-/* POPUP */
-function openPopup() {
-  if (cart.length === 0) {
-    alert("Your cart is empty!");
-    return;
-  }
-
-  document.getElementById("popupBg").style.display = "flex";
-}
-
-/* SUBMIT ORDER */
-function submitOrder() {
-  const name = document.getElementById("custName").value.trim();
-  const phone = document.getElementById("custPhone").value.trim();
-
-  if (name === "" || phone.length < 10) {
-    alert("Enter valid name and phone number!");
-    return;
-  }
-
-  let msg = `Customer: ${name}%0APhone: ${phone}%0A%0AOrder Details:%0A`;
-
-  cart.forEach((item, i) => {
-    msg += `${i+1}. ${item.name} (x${item.qty}) - ₹${item.price * item.qty}%0A`;
-  });
-
-  const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-  msg += `%0A------------------%0ATotal Amount: ₹${total}%0A------------------`;
-
-  const phoneNumber = "919360362776";
-  const url = `https://wa.me/${phoneNumber}?text=${msg}`;
-
-  window.open(url, "_blank");
-  document.getElementById("popupBg").style.display = "none";
-}
+function closeCheckout(){ document.getElementById('checkoutPopup').style.display='none'; }
 
 displayProducts();
+updateCart();
 </script>
-
 </body>
 </html>
