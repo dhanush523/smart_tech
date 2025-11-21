@@ -94,7 +94,7 @@ function submitShop() {
     return;
   }
 
-  const message = `📌 *Service Booking (At Shop)*
+ const message = `📌 *Service Booking (At Shop)*
 
 🔧 *Service:* ${selectedService}
 
@@ -104,8 +104,10 @@ function submitShop() {
 📅 *Date:* ${date}
 ⏰ *Time:* ${time || "Not Selected"}
 
-📍 * Our Shop Location:* ${"https://maps.app.goo.gl/v2935ze3z8ncTNEd9"}
-  `;
+📍 *Our Shop Location:*  
+https://maps.app.goo.gl/v2935ze3z8ncTNEd9
+`;
+
 
   sendToWhatsApp(message);
   resetShopForm();
@@ -141,12 +143,14 @@ function submitHome() {
 
   const message = `
 📌 *Service Booking (At Home)*
-🔧 Service: ${selectedService}
-👤 Name: ${name}
-📞 Phone: ${phone}
-🏠 Address: ${address}
-📅 Date: ${date}
-⏰ Time: ${time || "Not Selected"}
+
+🔧 *Service*: ${selectedService}
+👤 *Name*: ${name}
+📞 *Phone*: ${phone}
+🏠 *Address*: ${address}
+
+📅 *Date*: ${date}
+⏰ *Time*: ${time || "Not Selected"}
   `;
 
   sendToWhatsApp(message);
